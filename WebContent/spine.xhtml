@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:insert name="metadata"/>
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Sprzedaż sprzętu IT</title>
+        <f:event type="preRenderView" listener="${auctionTermsAcknowledgmentService.ensureAcknowledgement(view.viewId)}" />
+    </h:head>
+    <h:body>
+        <div id="top" align="center">
+            <p:graphicImage class="logo" value="#{imageResourceApplicationService.logoPGNiG}"  />
+            <p:growl id="msgs" showDetail="true" />
+            <h3 style="margin-top: 0">Sprzedaż Sprzętu IT</h3>
+            <h:outputFormat value="#{mess.acknowledgement_reminder}">
+                <f:param value="#{auctionTermsAcknowledgmentService.userPresentableName}" />
+                <f:param value="#{auctionTermsAcknowledgmentService.acknowledgementDate}" />
+            </h:outputFormat>
+            <br/>
+            <br/>
+            <h:form>
+                <p:tabMenu id="stickyTarget" activeIndex="#{param.category}">
+                    <p:menuitem value="Komputery stacjonarne" style="font-weight: bolder" outcome="itemsBrowse">
+                        <f:param name="category" value="0"/>
+                    </p:menuitem>
+                    <p:menuitem value="Laptopy" outcome="itemsBrowse" style="font-weight: bolder">
+                        <f:param name="category" value="1" />
+                    </p:menuitem>
+                    <p:menuitem value="Monitory" outcome="itemsBrowse" style="font-weight: bolder">
+                        <f:param name="category" value="2"/>
+                    </p:menuitem>
+                    <p:menuitem value="Moje zakupy" outcome="purchaseHist" style="font-weight: bolder">
+                        <f:param name="category" value="3"/>
+                    </p:menuitem>
+                    <p:menuitem value="Administracja" outcome="adminPanel" style="font-weight: bolder" rendered="#{availableAuctionItemBrowseView.showAdminTab}">
+                        <f:param name="category" value="4"/>
+                    </p:menuitem>
+                </p:tabMenu>
+                <p:sticky target="stickyTarget"/>
+            </h:form>
+        </div>
+        <div id="content" align="center" style="width: 100% !important">
+            <ui:insert name="content">Content</ui:insert>
+        </div>
+    </h:body>
+</html>
+

@@ -1,0 +1,219 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+        <ui:composition template="./spine.xhtml">
+            <ui:define name="metadata">
+                <f:metadata/>
+            </ui:define>
+            <ui:define name="content">
+                <p:scrollPanel mode="native" style="overflow: auto;">
+                    <h:panelGrid columns="2" cellpadding="10" style="float: left;">
+                        <h:outputStylesheet library="css" name="basic.css"  />
+                        <p:tabView prependId="false">
+                            <p:tab title="#{mess.itemsBought}" rendered="#{!adminOrderView.account}">
+                                <h:form>
+                                    <h:panelGrid columns="2" cellpadding="10" style="text-align: center;"> 
+                                        <h:outputStylesheet library="css" name="basic.css"  />
+                                        <p:growl id="messages" showDetail="true" />
+                                        <p:dataTable id="Orders" var="orders" widgetVar="bartekk" value="#{adminOrderView.userOrderAdmin}"
+                                                     paginator="true" paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink}  
+                                                     {LastPageLink}  {RowsPerPageDropdown} {Exporters}"
+                                                     rowsPerPageTemplate="5,25,50" rows="25"
+                                                     filteredValue="#{adminOrderView.filteredOrders}" reflow="true"
+                                                     rowIndexVar="index"
+                                                     >
+                                            <f:facet name="{Exporters}">
+                                                <h:commandButton value="#{mess.excelExport}" >
+                                                    <p:dataExporter type="xls" target="Orders" fileName="orders" pageOnly="true" />
+                                                </h:commandButton>
+                                            </f:facet>
+                                            <p:column style="width: 25px;">
+                                                <f:facet name="header">
+                                                    <h:outputText value="Lp." />
+                                                </f:facet>
+                                                <h:outputText 
+                                                    value="#{index + 1}" />
+                                            </p:column> 
+                                            <p:column headerText="#{mess.orders_equipmentType}" >
+                                                <h:outputText value="#{orders.auctionItem.equipmentType}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_inventoryNumber}" style="text-align: center; width: 100px;">
+                                                <h:outputText value="#{orders.auctionItem.inventoryNumber}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_model}">
+                                                <h:outputText value="#{orders.auctionItem.model}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_serialNumber}" style="width: 100px;" >
+                                                <h:outputText value="#{orders.auctionItem.serialNumber.toUpperCase()}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_parameters}" >
+                                                <h:outputText value="#{orders.auctionItem.parameters}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_additionalInfo}">
+                                                <h:outputText value="#{orders.auctionItem.additionalInfo}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_purchaseDate}" style="text-align: center;">
+                                                <h:outputText value="#{orders.auctionItem.purchaseDate}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.auctionItem_photo}" style="text-align: center;">
+                                                <p:commandButton icon="ui-icon-image" title="#{mess.photos}" 
+                                                                 action="#{availableAuctionItemBrowseView.openPhotosDialog(orders.auctionItem)}">
+                                                </p:commandButton>
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_price}">
+                                                <h:outputText value="#{orders.auctionItem.priceFormatted}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_firstName}">
+                                                <h:outputText value="#{orders.firstName}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_lastName}">
+                                                <h:outputText value="#{orders.lastName}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_userAddress}">
+                                                <h:outputText value="#{orders.userAddress}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_userEmail}" >
+                                                <h:outputText value="#{orders.userEmail}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_nip}">
+                                                <h:outputText value="#{orders.NIP}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_companyName}">
+                                                <h:outputText value="#{orders.companyName}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_companyAddress}" >
+                                                <h:outputText value="#{orders.companyAddress}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_orderDate}" filterBy="#{orders.purchaseDate}" style="text-align: center; width: 150px;" >
+                                                <f:facet name="filter">
+                                                    <p:selectOneMenu  onchange="PF('bartekk').filter()" 
+                                                                      styleClass="custom-filter">
+                                                        <f:selectItem  itemValue="#{null}" noSelectionOption="true" />
+                                                        <f:selectItems value="#{adminOrderView.orderDates}" />
+                                                    </p:selectOneMenu> 
+                                                </f:facet>
+                                                <h:outputText value="#{orders.purchaseDate}" />
+                                            </p:column>
+                                        </p:dataTable>
+                                    </h:panelGrid>
+                                </h:form>
+                            </p:tab>
+                            <p:tab title="Import z excela"  rendered="#{!adminOrderView.account}" >
+                                <h:form style="float: left">
+                                    <p:commandLink value="#{mess.navigateToExcelImport}" action="priviledged/excelFileUpload?faces-redirect=true"></p:commandLink>
+                                </h:form> 
+                            </p:tab>
+                            <p:tab title="#{mess.accountancyView}">
+                                <h:form>
+                                    <h:panelGrid columns="2" cellpadding="10" style="text-align: center;">
+                                        <h:outputStylesheet library="css" name="basic.css"  />
+                                        <p:growl id="messages" showDetail="true" />
+                                        <p:dataTable id="Orders" var="orders" widgetVar="bartek" value="#{orderStatusView.userOrderAdmin}"
+                                                     paginator="true" paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink}  
+                                                     {LastPageLink}  {RowsPerPageDropdown} {Exporters}"
+                                                     rowsPerPageTemplate="5,25,50" rows="25"
+                                                     filteredValue="#{orderStatusView.filteredOrders}" reflow="true"
+                                                     rowIndexVar="index"
+                                                     >
+                                            <f:facet name="{Exporters}">
+                                                <h:commandButton value="#{mess.excelExport}" >
+                                                    <p:dataExporter type="xls" target="Orders" fileName="orders" pageOnly="true" />
+                                                </h:commandButton>
+                                            </f:facet>
+                                            <p:column style="width: 25px;">
+                                                <f:facet name="header">
+                                                    <h:outputText value="Lp." />
+                                                </f:facet>
+                                                <h:outputText 
+                                                    value="#{index + 1}" />
+                                            </p:column> 
+                                            <p:column headerText="#{mess.orders_equipmentType}" >
+                                                <h:outputText value="#{orders.auctionItem.equipmentType}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_inventoryNumber}" style="text-align: center; width: 100px;">
+                                                <h:outputText value="#{orders.auctionItem.inventoryNumber}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_model}">
+                                                <h:outputText value="#{orders.auctionItem.model}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_serialNumber}" style="width: 100px;" >
+                                                <h:outputText value="#{orders.auctionItem.serialNumber.toUpperCase()}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_price}">
+                                                <h:outputText value="#{orders.auctionItem.priceFormatted}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_firstName}">
+                                                <h:outputText value="#{orders.firstName}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_lastName}">
+                                                <h:outputText value="#{orders.lastName}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_userAddress}">
+                                                <h:outputText value="#{orders.userAddress}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_userEmail}" style="width: 220px; word-break: break-all" >
+                                                <h:outputText value="#{orders.userEmail}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_nip}">
+                                                <h:outputText value="#{orders.NIP}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_companyName}">
+                                                <h:outputText value="#{orders.companyName}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_companyAddress}" >
+                                                <h:outputText value="#{orders.companyAddress}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_orderDate}" filterBy="#{orders.purchaseDate}" style="text-align: center; width: 150px;" >
+                                                <f:facet name="filter">
+                                                    <p:selectOneMenu  onchange="PF('bartek').filter()" 
+                                                                      styleClass="custom-filter">
+                                                        <f:selectItem  itemValue="#{null}" noSelectionOption="true" />
+                                                        <f:selectItems value="#{orderStatusView.orderDates}" />
+                                                    </p:selectOneMenu> 
+                                                </f:facet>
+                                                <h:outputText value="#{orders.purchaseDate}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.status}" style="text-align: center; width: 150px;" filterBy="#{orders.orderStatus.orderStatusType.name}">
+                                                <f:facet name="filter">
+                                                    <p:selectOneMenu onchange="PF('bartek').filter()"
+                                                                     styleClass="custom-filter">
+                                                        <f:selectItem itemValue="#{null}" noSelectionOption="true" />
+                                                        <f:selectItems value="#{orderStatusView.statusList}" />
+                                                    </p:selectOneMenu>
+                                                </f:facet>
+                                                <h:outputText value="#{orders.orderStatus.orderStatusType.name}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.payDate}" style="width: 100px;">
+                                                <h:outputText value="#{orders.invoiceOrderStatus.statusChangeTime}" rendered="#{not empty orders.invoiceOrderStatus}" >
+                                                    <f:convertDateTime pattern="yyyy-MM-dd HH:mm" />
+                                                </h:outputText>
+                                            </p:column>
+                                            <p:column headerText="#{mess.releaseDate}" style="width: 60px;">
+                                                <h:outputText value="#{orders.deliveryDate}" rendered="#{orders.orderStatus.orderStatusType.name.startsWith('WYD')}"/>
+                                            </p:column>
+                                            <p:column headerText="#{mess.invoiceNumber}" style="width: 100px;">
+                                                <h:outputText value="#{orders.invoiceOrderStatus.info}" rendered="#{not empty orders.invoiceOrderStatus}"/>
+                                            </p:column>
+                                            <p:column headerText="Zmiana statusu" >
+                                                <p:commandButton  action="#{orderStatusView.openStatusChangeDialog(orders.id)}" icon="ui-icon-refresh" title="Zamowienie" >
+                                                    <p:ajax event="dialogReturn" listener="#{orderStatusView.onDialogReturn}"/>
+                                                </p:commandButton>
+                                            </p:column>
+                                        </p:dataTable>
+                                    </h:panelGrid>
+                                </h:form>
+                            </p:tab>
+                        </p:tabView>
+                    </h:panelGrid>
+                </p:scrollPanel>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>
+

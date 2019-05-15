@@ -1,0 +1,26 @@
+ <div>
+            <p>Dzień dobry,</p>
+            <p>Potwierdzamy zakup sprzętu o numerze seryjnym {0} za kwotę {2} PLN</p>
+            <p>o następujących parametrach: </p>
+            <p style="font-weight: bold;">{3}</p>
+            <p>Dane adresowe kupującego podane podczas zakupu:  </p>
+            <p style="font-weight: bold;">- nazwa firmy: {5} </p>
+            <p style="font-weight: bold;">- adres firmy: {6}</p>
+            <p style="font-weight: bold;">- NIP firmy: {7}</p>
+			<p style="font-weight: bold;">- adres e-mail: {12}</p>
+			<p>Faktura za zakupiony sprzęt zostanie dostarczona na podany adres e-mail.<br/>
+			Po otrzymaniu faktury prosimy o opłacenie zakupu w ciągu 7 dni.</p>
+			<p>Numer rachunku bankowego na który należy dokonać przelew to: <b>06 1240 1037 1111 0010 3674 9185 .</b></p>
+			<p><b>Odbiór sprzętu następuje w dniach: wtorek oraz czwartek w godz. 11:00-14:00 w pokoju 524 EC Żerań.</b><br/>
+			Po odbiór prosimy zgłosić się z potwierdzeniem przelewu za zakupiony sprzęt. </p>
+        </div>
+		<footer>
+				<p>Z poważaniem</p>
+				<p style="font-weight: bold;">Komisja Likwidacyjna Majątku PGNiG Serwis sp. z o.o. </p>
+				<p style="font-weight: bold;">Kontakt: <a href="komisja.likwidacyjna@serwis.pgnig.pl">komisja.likwidacyjna@serwis.pgnig.pl</a></p>
+				<span style='mso-fareast-language:PL'>
+				<img border=0 id="logo" src="cid:logoPGNiG.jpg" alt="znak RGB">
+				</span>
+				<p style="font-size: 9;">Wiadomość została wygenerowana automatycznie - proszę na nią nie odpowiadać.</p>
+			</footer>
+

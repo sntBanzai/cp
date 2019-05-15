@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+        <title>Importuj z excela</title>
+         <f:event type="preRenderView" listener="${auctionTermsAcknowledgmentService.ensureAcknowledgement(view.viewId)}" />
+    </h:head>
+    <h:body>
+        <h:form enctype="multipart/form-data">
+            <h:outputStylesheet library="css" name="basic.css"  />
+            <p:growl id="messages" showDetail="false" />
+            <p:commandLink value="Powrót na stronę główną" action="/adminPanel?faces-redirect=true" style="font-size: 18px"/>
+            <br/>
+            <p:fileUpload label="Wybierz plik" value="#{fileUploadView.file}" mode="simple" 
+                          fileLimit="1" auto="false" skinSimple="true" accept=".xls,.xlsx" style="float: left; font-size: 22px">
+            </p:fileUpload>
+            <p:commandButton id="saveButt" value="Zapisz" ajax="false" 
+                             action="#{fileUploadView.persistInDatabase}" disabled="#{not fileUploadView.parsedWorkbook.isPresent()}" 
+                             style="float: right; font-size: 22px"/>
+             <p:commandButton id="abortButt" value="Wyczyść" ajax="false" action="#{fileUploadView.onAbort}" style="float: right; font-size: 22px"
+                              disabled="#{not fileUploadView.parsedWorkbook.isPresent()}" update="@form" />
+             <p:commandButton value="Wczytaj" ajax="false" action="#{fileUploadView.onComplete}" update="worksheetList saveButt abortButt" style="float: right; font-size: 22px"/>
+            <br/><br/><br/><br/>
+            <p:dataTable id="worksheetList"  value="#{fileUploadView.workbookRows}" var="rowIter" rendered="#{fileUploadView.parsedWorkbook.isPresent()}" style="float: bottom">
+                <p:columns value="#{fileUploadView.columns}" var="column" columnIndexVar="indx" >
+                    <f:facet name="header">
+                        <h:outputText value="#{column}" />
+                    </f:facet>
+                    <h:outputText value="#{rowIter.getCell(indx)}" />
+                </p:columns>
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>
+

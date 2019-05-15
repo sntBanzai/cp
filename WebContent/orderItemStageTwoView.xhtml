@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+        <title>Potwierdzenie zamówienia</title>
+    </h:head>
+    <h:body>
+        <p:graphicImage class="logo" styleClass="basic.css" value="#{imageResourceApplicationService.logoPGNiG}"  />
+        <h:form id="theForm" style="position: relative; align-self: center; align-content: center; align-items: center; text-align: center; vertical-align: central">
+            <p:outputPanel rendered="#{empty orderItemStageTwoView.messageToShow}">
+
+                <p:outputLabel value="#{mess.orders_userName}" style="font-style: oblique;margin-bottom: 1em; font-size: 0.75em"/><br/>
+                <p:outputLabel value="#{orderItemStageTwoView.user.nameUser}" style="font-style: normal;margin-bottom:  1em"/><br/>
+
+                <p:outputLabel value="#{mess.orders_userLastName}" style="font-style: oblique;margin-bottom: 1em; font-size: 0.75em"/><br/>
+                <p:outputLabel value="#{orderItemStageTwoView.user.surnameUser}" style="font-style: normal;margin-bottom: 1.5em"/><br/>
+
+                <p:selectBooleanCheckbox value="#{orderItemStageTwoView.entryCheckBox}" itemLabel="#{mess.orders_invoiceCheckBox}"  style="font-style: italic;margin-top: 1em; font-size: 0.75em;font-weight: bold">
+                    
+                     <f:ajax event="change" render="@form"/>
+                </p:selectBooleanCheckbox><br/>
+                <h:outputLabel value="#{mess.orders_invoiceCheckBox2}" style="font-style: italic;margin-top: 1em; font-size: 0.75em;"/>
+
+                <p:panel id="checkBoxOff" visible="#{not orderItemStageTwoView.checkBox}" style="border-style: none ">
+                    <p:outputLabel value="#{mess.orders_userAddress}" style="font-style: oblique;margin-bottom: 1em; font-size: 0.75em" 
+                                   indicateRequired="#{not orderItemStageTwoView.checkBox}"/><br/>
+                    <p:message showDetail="true" for="userAddress" style="font-size: 0.75em"/>
+                    <p:inputTextarea  id="userAddress" value="#{orderItemStageTwoView.userAddress}" 
+                                      style="font-style: normal;margin-bottom: 1.5em;" required="#{not orderItemStageTwoView.checkBox}"
+                                      cols="50" label="#{mess.orders_userAddress}" requiredMessage="#{mess.fieldMustNotBeEmpty}" 
+                                      validator="postCodeValidator" rendered="#{not orderItemStageTwoView.checkBox}" 
+                                      disabled="#{not orderItemStageTwoView.entryCheckBox}"/>
+                </p:panel> 
+                <div oncopy="return false;" onpaste="return false;" oncut="return false;">
+                    <p:outputLabel value="#{mess.order_type_email}" style="font-style: oblique;margin-bottom: 1em; font-size: 0.75em" indicateRequired="true"/><br/>
+                    <p:message showDetail="true" for="mailInputOne" style="font-size: 0.75em">
+                        <p:autoUpdate/>
+                    </p:message>
+                    <p:inputText id="mailInputOne" value="#{orderItemStageTwoView.orderEmail}" autocomplete="false" 
+                                 style="font-style: normal;margin-bottom: 0.25em; width: 65%" required="true" 
+                                 requiredMessage="#{mess.fieldMustNotBeEmpty}" disabled="#{not orderItemStageTwoView.entryCheckBox}">
+                        <f:validateRegex pattern="[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})"/>
+                    </p:inputText>
+                    <br/>
+
+                    <p:outputLabel value="#{mess.order_retype_email}" style="font-style: oblique;margin-bottom: 1em; font-size: 0.75em" indicateRequired="true"/><br/>
+                    <p:message showDetail="true" for="mailInputTwo" style="font-size: 0.75em">
+                        <p:autoUpdate/>
+                    </p:message>
+                    <p:inputText id="mailInputTwo" autocomplete="false" value="#{orderItemStageTwoView.retypedEmail}"
+                                 style="font-style: normal;margin-bottom: 1.5em; width: 65%"
+                                 required="true" requiredMessage="#{mess.fieldMustNotBeEmpty}" disabled="#{not orderItemStageTwoView.entryCheckBox}">
+                        <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
+                    </p:inputText>
+                    <br/>
+                </div>
+
+                <p:selectBooleanCheckbox value="#{orderItemStageTwoView.checkBox}" itemLabel="#{mess.orders_invoiceOnCompany}" 
+                                         style="font-style: oblique;margin-bottom: 1em; font-size: 0.75em" disabled="#{not orderItemStageTwoView.entryCheckBox}">
+                    <f:ajax event="change" render="checkBoxOn checkBoxOff"/>
+                </p:selectBooleanCheckbox>
+                <br/>
+
+
+
+                <p:panel id="checkBoxOn" visible="#{orderItemStageTwoView.checkBox}" style="border-style: none ">
+                    <p:outputLabel value="#{mess.orders_companyName}" style="font-style: oblique;margin-bottom: 1em; font-size: 0.75em" 
+                                   indicateRequired="#{orderItemStageTwoView.checkBox}"/><br/>
+                    <p:message showDetail="true" for="companyName" style="font-size: 0.75em"/>
+                    <p:inputTextarea id="companyName" value="#{orderItemStageTwoView.companyName}" 
+                                     style="font-style: normal;margin-bottom: 1.5em" 
+                                     required="#{orderItemStageTwoView.checkBox}" 
+                                     rendered="#{orderItemStageTwoView.checkBox}"
+                                     cols="50" requiredMessage="#{mess.fieldMustNotBeEmpty}"
+                                     disabled="#{not orderItemStageTwoView.entryCheckBox}"/><br/>
+
+
+                    <p:outputLabel value="#{mess.orders_companyAddress}" style="font-style: oblique;margin-bottom: 1em; font-size: 0.75em" 
+                                   indicateRequired="#{orderItemStageTwoView.checkBox}"/><br/>
+                    <p:message showDetail="true" for="companyAddress" style="font-size: 0.75em"/>
+                    <p:inputTextarea id="companyAddress" value="#{orderItemStageTwoView.companyAddress}" 
+                                     style="font-style: normal;margin-bottom: 1.5em" 
+                                     required="#{orderItemStageTwoView.checkBox}" cols="50" 
+                                     rendered="#{orderItemStageTwoView.checkBox}"
+                                     requiredMessage="#{mess.fieldMustNotBeEmpty}" 
+                                     validator="postCodeValidator"
+                                     disabled="#{not orderItemStageTwoView.entryCheckBox}"/><br/>
+
+
+                    <p:outputLabel value="#{mess.orders_nip}" style="font-style: oblique;margin-bottom: 1em; font-size: 0.75em" 
+                                   indicateRequired="#{orderItemStageTwoView.checkBox}"/><br/>
+                    <p:message showDetail="true" for="enajpi" style="font-size: 0.75em"/>
+                    <p:inputText id="enajpi" value="#{orderItemStageTwoView.NIP}" 
+                                 style="font-style: normal;margin-bottom: 1.5em; " 
+                                 required="#{orderItemStageTwoView.checkBox}" 
+                                 rendered="#{orderItemStageTwoView.checkBox}" 
+                                 requiredMessage="#{mess.fieldMustNotBeEmpty}" 
+                                 validator="nipValidator"
+                                 disabled="#{not orderItemStageTwoView.entryCheckBox}"/><br/>
+                </p:panel>
+
+                <p:commandButton title="Zatwierdź" style="margin-top: 2em; margin-bottom: 0.5em" actionListener="#{orderItemStageTwoView.makeOrder()}" 
+                                 update="@form" disabled="#{not orderItemStageTwoView.entryCheckBox}">
+                </p:commandButton>
+            </p:outputPanel>
+            <p:outputPanel rendered="#{not empty orderItemStageTwoView.messageToShow}">
+                <p:outputLabel value="#{orderItemStageTwoView.messageToShow}"></p:outputLabel><br/>
+                <p:commandButton value="Zamknij" id="butt" action="#{orderItemStageTwoView.collapseDialog()}"></p:commandButton>  
+            </p:outputPanel>
+        </h:form>
+    </h:body>
+</html>
+

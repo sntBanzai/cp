@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <body>
+        <ui:composition template="./spine.xhtml">
+            <ui:define name="metadata">
+                <f:metadata/>
+            </ui:define>
+            <ui:define name="content">
+                <p:scrollPanel mode="native">
+                    <h:form>
+                        <h:panelGrid columns="2" cellpadding="10" style="text-align: center;"> 
+                            <h:outputStylesheet library="css" name="basic.css"  />
+                            <p:growl id="messages" showDetail="true" />
+                            <p:dataTable var="orders" value="#{userOrderView.userOrder}" paginator="false" rowIndexVar="index"
+                                         >
+                                <p:column style="width: 50px;">
+                                    <f:facet name="header">
+                                        <h:outputText value="Lp." />
+                                    </f:facet>
+                                    <h:outputText 
+                                        value="#{index + 1}" />
+                                </p:column> 
+                                <p:column headerText="#{mess.orders_model}">
+                                    <h:outputText value="#{orders.auctionItem.model}" />
+                                </p:column>
+                                <p:column headerText="#{mess.orders_serialNumber}">
+                                    <h:outputText value="#{orders.auctionItem.serialNumber.toUpperCase()}" />
+                                </p:column>
+                                <p:column headerText="#{mess.orders_parameters}">
+                                    <h:outputText value="#{orders.auctionItem.parameters}" />
+                                </p:column>
+                                <p:column headerText="#{mess.orders_additionalInfo}">
+                                    <h:outputText value="#{orders.auctionItem.additionalInfo}" />
+                                </p:column>
+                                <p:column headerText="#{mess.orders_purchaseDate}">
+                                    <h:outputText value="#{orders.auctionItem.purchaseDate}" style="text-align: center;"/>
+                                </p:column>
+                                <p:column headerText="#{mess.auctionItem_photo}" style="text-align: center;">
+                                    <p:commandButton icon="ui-icon-image" title="#{mess.photos}" action="#{availableAuctionItemBrowseView.openPhotosDialog(orders.auctionItem)}">
+                                    </p:commandButton>
+                                </p:column>
+                                <p:column headerText="#{mess.orders_price}">
+                                    <h:outputText value="#{orders.auctionItem.priceFormatted}" />
+                                </p:column>
+                                <p:column headerText="#{mess.orders_firstName}">
+                                    <h:outputText value="#{orders.firstName}" />
+                                </p:column>
+                                <p:column headerText="#{mess.orders_lastName}">
+                                    <h:outputText value="#{orders.lastName}" />
+                                </p:column>
+                                <p:column headerText="#{mess.orders_userAddress}">
+                                    <h:outputText value="#{orders.userAddress}" />
+                                </p:column>
+                                <p:column headerText="#{mess.orders_userEmail}">
+                                    <h:outputText value="#{orders.userEmail}" />
+                                </p:column>
+                                <p:column headerText="#{mess.orders_nip}">
+                                    <h:outputText value="#{orders.NIP}" />
+                                </p:column>
+                                <p:column headerText="#{mess.orders_companyName}">
+                                    <h:outputText value="#{orders.companyName}" />
+                                </p:column>
+                                <p:column headerText="#{mess.orders_companyAddress}">
+                                    <h:outputText value="#{orders.companyAddress}" />
+                                </p:column>
+                                <p:column headerText="#{mess.orders_orderDate}" style="text-align: center;">
+                                    <h:outputText value="#{orders.purchaseDate}" />
+                                </p:column>
+                            </p:dataTable>
+                        </h:panelGrid>
+                    </h:form>
+                </p:scrollPanel>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>
+

@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <meta charset="UTF-8"/>
+        <title><h:outputText value="Zdjęcia dla przedmiotu: #{auctionItemPhotosView.serialNumber.toUpperCase()}"/></title>
+        <p:graphicImage class="logo" value="#{imageResourceApplicationService.logoPGNiG}" />
+    </h:head>
+    <h:body>
+        <p:outputLabel value="Brak zdjęć dla tego przedmiotu." rendered="#{empty auctionItemPhotosView.photo}" />
+        <h:form rendered="#{not empty auctionItemPhotosView.photo}">
+            <p:graphicImage value="#{auctionItemPhotosView.photo}" stream="false" /><br/>
+            <p:commandButton  id="prevPhoto" style="azimuth: far-left; float: left; " icon="ui-icon-circle-arrow-w" value="Poprzednie zdjęcie"><br/>
+                <f:ajax immediate="true" event="click" listener="#{auctionItemPhotosView.prevPhoto()}" render="@form"/>
+            </p:commandButton >
+            <p:commandButton  id="nextPhoto" style="azimuth: far-right; float: right;" icon="ui-icon-circle-arrow-e" value="Następne zdjęcie">
+                <f:ajax immediate="true" event="click" listener="#{auctionItemPhotosView.nextPhoto()}" render="@form"/>
+            </p:commandButton>
+        </h:form>
+    </h:body>
+</html>
+

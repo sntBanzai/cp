@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+                http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd">
+
+
+    <context:annotation-config/>
+    <context:component-scan base-package="pl.pgnig.serwis.auction.service"/>
+    <context:component-scan base-package="pl.pgnig.serwis.auction.view"/>
+    <task:executor id="mailSenderExecutor" pool-size="3"/>
+    <task:executor id="photosFolderWatcherExecutor" pool-size="3"/>
+    <task:annotation-driven executor="mailSenderExecutor"/> 
+    
+
+    <bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+        <property name="scopes">
+            <map>
+                <entry key="view">
+                    <bean class="pl.pgnig.serwis.auction.view.ViewScope"/>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+
+</beans>

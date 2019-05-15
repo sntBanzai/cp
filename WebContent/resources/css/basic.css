@@ -1,0 +1,98 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2019-03-11, 07:32:06
+    Author     : a6jmalyszko
+*/
+body {
+    background-color: #ffffff;
+    font-size: 12px;
+    font-family: Verdana, "Verdana CE", Arial, "Arial CE",
+        "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+    color: #000000;
+    margin: 10px;
+}
+
+h1 {
+    font-family: Arial, "Arial CE", "Lucida Grande CE", lucida,
+        "Helvetica CE", sans-serif;
+    border-bottom: 1px solid #AFAFAF;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0px;
+    padding: 0px;
+    color: #D20005;
+}
+
+a:link, a:visited {
+    color: #045491;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+a:link:hover, a:visited:hover {
+    color: #045491;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.indexesTable{
+    position: absolute;
+    top: 20px;
+}
+.logo{
+    float: right;
+}
+
+.btnCreate{
+    border-radius: 0px;
+    background-image: image("#{resource['images/logoPGNiG.jpg']}") ;
+    width: 26px;
+    height: 26px;
+    background-position: -10px -10px;
+    float: right;
+}
+.ui-tabs-panels{
+    max-height: 90%;
+    max-width:  100%;
+    min-width: 100%;
+    min-height: 90%;
+    overflow:auto;
+}
+.ui-datatable-tablewrapper{
+    overflow: auto;
+    width: auto;
+    table-layout: auto;
+}
+.ui-tabs .ui-tabs-nav.ui-widget-header li a{
+    font-weight: bolder !important;
+
+}
+.ui-datatable-data ui-widget-content {
+    background-color: black;
+    width: auto !important;
+}
+.ui-datatable table{
+    width: auto !important;
+
+}
+.ui-datatable tbody.ui-datatable-data{
+    width: auto !important;
+
+}
+#j_idt26:j_idt29_data{
+    background-color: black;
+    width: auto !important;
+
+}
+
+
+.ui-tabs-panel ui-widget-content ui-corner-bottom ui-helper-hidden{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+
+}
+

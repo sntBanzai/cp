@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+        <title>Zmiana statusu</title>
+    </h:head>
+    <h:body>
+        <p:graphicImage class="logo" value="#{imageResourceApplicationService.logoPGNiG}"/>
+        <p:panel style="position: static; align-self: center; align-content: center; align-items: center; text-align: center; vertical-align: central; border-style: none">
+          <h:form>
+            <p:outputPanel>
+
+                <p:outputLabel value="#{mess.status}" style="font-style: oblique;margin-bottom: 1em; font-size: 0.75em"/><br/>
+                <p:outputLabel value="#{orderStatusChangeView.orders.orderStatus.orderStatusType.name}" style="font-style: normal;margin-bottom: 1.5em" /><br/><br/>
+                
+                <p:outputLabel value="#{mess.newStatus}" style="font-style: oblique;margin-bottom: 1em; font-size: 0.75em"/><br/>
+                <p:outputLabel value="#{orderStatusChangeView.newStatusAvailable.toString()}" /><br/><br/>
+                
+                <p:outputLabel value="${orderStatusChangeView.getInfoFieldLabel()}" style="font-style: oblique;margin-bottom: 1em; font-size: 0.75em" /><br/>
+                <p:message showDetail="true" for="status" style="font-size: 0.75em"/>
+                <p:inputTextarea id="status" value="#{orderStatusChangeView.information}" cols="50" required="#{orderStatusChangeView.infoFieldRequired}" requiredMessage="#{mess.fieldMustNotBeEmpty}" /><br/>
+            </p:outputPanel>
+                <p:commandButton action="#{orderStatusChangeView.changeStatus()}" style="margin-top: 2em; margin-bottom: 0.5em" title="Dokonaj zmiany" update="@form"/>
+            </h:form>
+        </p:panel>
+    </h:body>
+</html>
+

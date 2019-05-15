@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="windows-1250"?>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"   
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Strona startowa - Sprzedaż Sprzętu IT</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <f:event type="preRenderView" listener="${auctionTermsAcknowledgmentService.ensureAcknowledgement(view.viewId)}" />
+    </h:head>
+    <h:body> 
+        <p:graphicImage class="logo" value="#{imageResourceApplicationService.logoPGNiG}"  />
+        <p:growl id="msgs" showDetail="true" />
+        <h3 style="margin-top: 0">Sprzedaż Sprzętu IT</h3>
+        <h:outputFormat value="#{mess.acknowledgement_reminder}">
+            <f:param value="#{auctionTermsAcknowledgmentService.userPresentableName}" />
+            <f:param value="#{auctionTermsAcknowledgmentService.acknowledgementDate}" />
+        </h:outputFormat>
+        <br/>
+        <br/>
+        <p:tabView style="font-synthesis: weight">
+            <p:tab title="Komputery stacjonarne" titleStyle="font-weight: bolder">
+                <p:scrollPanel mode="native">
+                    <h:form>
+                        <h:panelGrid columns="2" cellpadding="10" style="text-align: center;" >
+                            <h:outputStylesheet library="css" name="basic.css"  />
+                            <p:growl id="messages" showDetail="true" />
+                            <p:dataTable var="auction" value="#{availableAuctionItemBrowseView.stacjonarne}" paginator="true"  rowIndexVar="index" 
+                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+                                         rowsPerPageTemplate="25,50"
+                                         >
+                                <p:column style="width: 50px;">
+                                    <f:facet name="header">
+                                        <h:outputText value="Lp." />
+                                    </f:facet>
+                                    <h:outputText 
+                                        value="#{index + 1}" />
+                                </p:column> 
+                                <p:column headerText="#{mess.auctionItem_model}">
+                                    <h:outputText value="#{auction.model}" />
+                                </p:column>
+                                <p:column headerText="#{mess.auctionItem_serialNumber}">
+                                    <h:outputText value="#{auction.serialNumber.toUpperCase()}" />
+                                </p:column>
+                                <p:column headerText="#{mess.auctionItem_parameters}">
+                                    <h:outputText value="#{auction.parameters}" />
+                                </p:column>
+                                <p:column headerText="#{mess.auctionItem_additionalInfo}">
+                                    <h:outputText value="#{auction.additionalInfo}" />
+                                </p:column>
+                                <p:column headerText="#{mess.auctionItem_purchaseDate}" style="text-align: center;">
+                                    <h:outputText value="#{auction.purchaseDate}" />
+                                </p:column>
+                                <p:column headerText="#{mess.auctionItem_photo}" style="text-align: center;">
+                                    <a href="#{availableAuctionItemBrowseView.prepareLinkToPhotos(auction)}">
+                                        <input type="button" value="Zdjęcia" />
+                                    </a>
+                                </p:column>
+                                <p:column headerText="#{mess.auctionItem_price}">
+                                    <h:outputText value="#{auction.priceFormatted}" />
+                                </p:column>
+                                <p:column headerText="#{mess.auctionItem_offerEndDate}" style="text-align: center;">
+                                    <h:outputText value="#{auction.offerEndDate}" />
+                                </p:column>
+                                <p:column headerText="#{mess.auctionItem_buy}" style="width: 40px; text-align: center">
+                                    <p:commandButton  action="#{availableAuctionItemBrowseView.openItemDetailsDialog(auction.id)}" icon="ui-icon-cart" title="Zamowienie" >
+                                        <p:ajax event="dialogReturn" listener="#{availableAuctionItemBrowseView.onDialogReturn}"/>
+                                    </p:commandButton>
+                                </p:column>
+                            </p:dataTable>
+                        </h:panelGrid>
+                    </h:form>
+                </p:scrollPanel>
+            </p:tab>
+            <p:tab title="Laptopy" >
+                <p:scrollPanel mode="native">
+                    <h:form>
+                        <h:panelGrid columns="2" cellpadding="10" style="text-align: center;">
+                            <h:outputStylesheet library="css" name="basic.css"  />
+                            <p:growl id="messages" showDetail="true" />
+                            <p:dataTable var="auction" value="#{availableAuctionItemBrowseView.laptopy}" paginator="true"
+                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} " 
+                                         rowsPerPageTemplate="25,50"
+                                         rowIndexVar="index"
+                                         >
+                                <p:column style="width: 50px;">
+                                    <f:facet name="header">
+                                        <h:outputText value="Lp." />
+                                    </f:facet>
+                                    <h:outputText 
+                                        value="#{index + 1}" />
+                                </p:column> 
+                                <p:column headerText="#{mess.auctionItem_model}">
+                                    <h:outputText value="#{auction.model}" />
+                                </p:column>
+                                <p:column headerText="#{mess.auctionItem_serialNumber}">
+                                    <h:outputText value="#{auction.serialNumber.toUpperCase()}" />
+                                </p:column>
+                                <p:column headerText="#{mess.auctionItem_parameters}">
+                                    <h:outputText value="#{auction.parameters}" />
+                                </p:column>
+                                <p:column headerText="#{mess.auctionItem_additionalInfo}">
+                                    <h:outputText value="#{auction.additionalInfo}" />
+                                </p:column>
+                                <p:column headerText="#{mess.auctionItem_purchaseDate}" style="text-align: center;">
+                                    <h:outputText value="#{auction.purchaseDate}" />
+                                </p:column>
+                                <p:column headerText="#{mess.auctionItem_photo}" style="text-align: center;">
+                                    <a id="linkX" href="#{availableAuctionItemBrowseView.prepareLinkToPhotos(auction)}">
+                                        <input type="button" id="butonX" value="Zdjęcia" />
+                                    </a>
+                                </p:column>
+                                <p:column headerText="#{mess.auctionItem_price}">
+                                    <h:outputText value="#{auction.priceFormatted}" />
+                                </p:column>
+                                <p:column headerText="#{mess.auctionItem_offerEndDate}" style="text-align: center;">
+                                    <h:outputText value="#{auction.offerEndDate}" />
+                                </p:column>
+                                <p:column headerText="#{mess.auctionItem_buy}" style="width: 40px; text-align: center">
+                                    <p:commandButton action="#{availableAuctionItemBrowseView.openItemDetailsDialog(auction.id)}" icon="ui-icon-cart" title="Zamowienie">
+                                        <p:ajax event="dialogReturn" listener="#{availableAuctionItemBrowseView.onDialogReturn}"/>
+                                    </p:commandButton>
+                                </p:column>
+                            </p:dataTable>
+                        </h:panelGrid>
+                    </h:form>
+                </p:scrollPanel>
+            </p:tab> 
+            <p:tab title="Monitory">
+                <p:scrollPanel mode="native">
+                    <h:form>
+                        <h:panelGrid columns="2" cellpadding="10" style="text-align: center;">
+                            <h:outputStylesheet library="css" name="basic.css"  />
+                            <p:growl id="messages" showDetail="true" />
+                            <p:dataTable var="auction" value="#{availableAuctionItemBrowseView.monitory}" paginator="true"
+                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+                                         rowsPerPageTemplate="25,50"
+                                         rowIndexVar="index" reflow="true" 
+                                         >
+                                <p:column style="width: 50px;">
+                                    <f:facet name="header">
+                                        <h:outputText value="Lp." />
+                                    </f:facet>
+                                    <h:outputText 
+                                        value="#{index + 1}" />
+                                </p:column> 
+                                <p:column headerText="#{mess.auctionItem_model}">
+                                    <h:outputText value="#{auction.model}" />
+                                </p:column>
+                                <p:column headerText="#{mess.auctionItem_serialNumber}">
+                                    <h:outputText value="#{auction.serialNumber.toUpperCase()}" />
+                                </p:column>
+                                <p:column headerText="#{mess.auctionItem_parameters}">
+                                    <h:outputText value="#{auction.parameters}" />
+                                </p:column>
+                                <p:column headerText="#{mess.auctionItem_purchaseDate}" style="text-align: center;">
+                                    <h:outputText value="#{auction.purchaseDate}" />
+                                </p:column>
+                                <p:column headerText="#{mess.auctionItem_photo}" style="text-align: center;">
+                                    <a id="linkX" href="#{availableAuctionItemBrowseView.prepareLinkToPhotos(auction)}">
+                                        <input type="button" id="butonX" value="Zdjęcia" />
+                                    </a>
+                                </p:column>
+                                <p:column headerText="#{mess.auctionItem_price}">
+                                    <h:outputText value="#{auction.priceFormatted}" />
+                                </p:column>
+                                <p:column headerText="#{mess.auctionItem_offerEndDate}" style="text-align: center;">
+                                    <h:outputText value="#{auction.offerEndDate}" />
+                                </p:column>
+                                <p:column headerText="#{mess.auctionItem_buy}" style="width: 40px; text-align: center">
+                                    <p:commandButton action="#{availableAuctionItemBrowseView.openItemDetailsDialog(auction.id)}" icon="ui-icon-cart" title="Zamowienie">
+                                        <p:ajax event="dialogReturn" listener="#{availableAuctionItemBrowseView.onDialogReturn}"/>
+                                    </p:commandButton>
+                                </p:column>
+                            </p:dataTable>
+                        </h:panelGrid>
+                    </h:form>
+                </p:scrollPanel>
+            </p:tab>
+            <p:tab title="Moje Zakupy">
+                <p:scrollPanel mode="native">
+                    <h:form>
+                        <h:panelGrid columns="2" cellpadding="10" style="text-align: center;"> 
+                            <h:outputStylesheet library="css" name="basic.css"  />
+                            <p:growl id="messages" showDetail="true" />
+                            <p:dataTable var="orders" value="#{userOrderView.userOrder}" paginator="false" rowIndexVar="index"
+                                         >
+                                <p:column style="width: 50px;">
+                                    <f:facet name="header">
+                                        <h:outputText value="Lp." />
+                                    </f:facet>
+                                    <h:outputText 
+                                        value="#{index + 1}" />
+                                </p:column> 
+                                <p:column headerText="#{mess.orders_model}">
+                                    <h:outputText value="#{orders.auctionItem.model}" />
+                                </p:column>
+                                <p:column headerText="#{mess.orders_serialNumber}">
+                                    <h:outputText value="#{orders.auctionItem.serialNumber.toUpperCase()}" />
+                                </p:column>
+                                <p:column headerText="#{mess.orders_parameters}">
+                                    <h:outputText value="#{orders.auctionItem.parameters}" />
+                                </p:column>
+                                <p:column headerText="#{mess.orders_additionalInfo}">
+                                    <h:outputText value="#{orders.auctionItem.additionalInfo}" />
+                                </p:column>
+                                <p:column headerText="#{mess.orders_purchaseDate}">
+                                    <h:outputText value="#{orders.auctionItem.purchaseDate}" style="text-align: center;"/>
+                                </p:column>
+                                <p:column headerText="#{mess.auctionItem_photo}" style="text-align: center;">
+                                    <a href="#{availableAuctionItemBrowseView.prepareLinkToPhotos(orders.auctionItem)}">
+                                        <input type="button" value="Zdjęcia" />
+                                    </a>
+                                </p:column>
+                                <p:column headerText="#{mess.orders_price}">
+                                    <h:outputText value="#{orders.auctionItem.priceFormatted}" />
+                                </p:column>
+                                <p:column headerText="#{mess.orders_firstName}">
+                                    <h:outputText value="#{orders.firstName}" />
+                                </p:column>
+                                <p:column headerText="#{mess.orders_lastName}">
+                                    <h:outputText value="#{orders.lastName}" />
+                                </p:column>
+                                <p:column headerText="#{mess.orders_userAddress}">
+                                    <h:outputText value="#{orders.userAddress}" />
+                                </p:column>
+                                <p:column headerText="#{mess.orders_userEmail}">
+                                    <h:outputText value="#{orders.userEmail}" />
+                                </p:column>
+                                <p:column headerText="#{mess.orders_nip}">
+                                    <h:outputText value="#{orders.NIP}" />
+                                </p:column>
+                                <p:column headerText="#{mess.orders_companyName}">
+                                    <h:outputText value="#{orders.companyName}" />
+                                </p:column>
+                                <p:column headerText="#{mess.orders_companyAddress}">
+                                    <h:outputText value="#{orders.companyName}" />
+                                </p:column>
+                                <p:column headerText="#{mess.orders_orderDate}" style="text-align: center;">
+                                    <h:outputText value="#{orders.purchaseDate}" />
+                                </p:column>
+                            </p:dataTable>
+                        </h:panelGrid>
+                    </h:form>
+                </p:scrollPanel>
+            </p:tab>
+            <p:tab title="Administracja" rendered="#{availableAuctionItemBrowseView.showAdminTab}">
+                <p:scrollPanel mode="native" style="overflow: auto;">
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <h:outputStylesheet library="css" name="basic.css"  />
+                        <p:tabView>
+                            <p:tab title="Kupiony sprzęt">
+                                <h:form>
+                                    <h:panelGrid columns="2" cellpadding="10" style="text-align: center;"> 
+                                        <h:outputStylesheet library="css" name="basic.css"  />
+                                        <p:growl id="messages" showDetail="true" />
+                                        <p:dataTable id="Orders" var="orders" widgetVar="bartek" value="#{adminOrderView.userOrderAdmin}"
+                                                     paginator="true" paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink}  
+                                                     {LastPageLink}  {RowsPerPageDropdown} {Exporters}"
+                                                     rowsPerPageTemplate="5,25,50"
+                                                     filteredValue="#{adminOrderView.filteredOrders}" reflow="true"
+                                                     rowIndexVar="index"
+                                                     >
+                                            <f:facet name="{Exporters}">
+                                                <h:commandButton value="Export zamówień do excela" >
+                                                    <p:dataExporter type="xls" target="Orders" fileName="orders" pageOnly="true" />
+                                                </h:commandButton>
+                                            </f:facet>
+                                            <p:column style="width: 25px;">
+                                                <f:facet name="header">
+                                                    <h:outputText value="Lp." />
+                                                </f:facet>
+                                                <h:outputText 
+                                                    value="#{index + 1}" />
+                                            </p:column> 
+                                            <p:column headerText="#{mess.orders_equipmentType}" >
+                                                <h:outputText value="#{orders.auctionItem.equipmentType}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_inventoryNumber}" style="text-align: center; width: 100px;">
+                                                <h:outputText value="#{orders.auctionItem.inventoryNumber}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_model}">
+                                                <h:outputText value="#{orders.auctionItem.model}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_serialNumber}" style="width: 100px;" >
+                                                <h:outputText value="#{orders.auctionItem.serialNumber.toUpperCase()}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_parameters}" >
+                                                <h:outputText value="#{orders.auctionItem.parameters}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_additionalInfo}">
+                                                <h:outputText value="#{orders.auctionItem.additionalInfo}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_purchaseDate}" style="text-align: center;">
+                                                <h:outputText value="#{orders.auctionItem.purchaseDate}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.auctionItem_photo}" style="text-align: center;">
+                                                <a href="#{availableAuctionItemBrowseView.prepareLinkToPhotos(orders.auctionItem)}">
+                                                    <input type="button" value="Zdjęcia" />
+                                                </a>
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_price}">
+                                                <h:outputText value="#{orders.auctionItem.priceFormatted}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_firstName}">
+                                                <h:outputText value="#{orders.firstName}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_lastName}">
+                                                <h:outputText value="#{orders.lastName}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_userAddress}">
+                                                <h:outputText value="#{orders.userAddress}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_userEmail}" >
+                                                <h:outputText value="#{orders.userEmail}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_nip}">
+                                                <h:outputText value="#{orders.NIP}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_companyName}">
+                                                <h:outputText value="#{orders.companyName}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_companyAddress}" >
+                                                <h:outputText value="#{orders.companyName}" />
+                                            </p:column>
+                                            <p:column headerText="#{mess.orders_orderDate}" filterBy="#{orders.purchaseDate}" style="text-align: center; width: 150px;" >
+                                                <f:facet name="filter">
+                                                    <p:selectOneMenu  onchange="PF('bartek').filter()" 
+                                                                      styleClass="custom-filter">
+                                                        <f:selectItem  itemValue="#{null}" noSelectionOption="true" />
+                                                        <f:selectItems value="#{adminOrderView.orderDates}" />
+                                                    </p:selectOneMenu> 
+                                                </f:facet>
+                                                <h:outputText value="#{orders.purchaseDate}" />
+                                            </p:column>
+                                        </p:dataTable>
+                                    </h:panelGrid>
+                                </h:form>
+                            </p:tab>
+                            <p:tab title="Import z excela">
+                                <h:form>
+                                    <p:commandLink value="Przejdź do strony importu" action="priviledged/excelFileUpload?faces-redirect=true"></p:commandLink>
+                                </h:form> 
+                            </p:tab>
+                        </p:tabView>
+                    </h:panelGrid>
+                </p:scrollPanel>
+            </p:tab>
+        </p:tabView>
+    </h:body>
+</html>

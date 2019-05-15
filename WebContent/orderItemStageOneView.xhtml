@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+        <title>Zamówienie</title>
+    </h:head>
+    <h:body>
+        <p:graphicImage class="logo" value="#{imageResourceApplicationService.logoPGNiG}"/>
+        <c:set var="auction" value="#{orderItemStageOneView.auctionItem}" scope="view"/>
+        <p:panel style="position: static; align-self: center; align-content: center; align-items: center; text-align: center; vertical-align: central; border-style: none">
+            <p:outputPanel>
+
+                <p:outputLabel value="#{mess.auctionItem_model}" style="font-style: oblique;margin-bottom: 1em; font-size: 0.75em"/><br/>
+                <p:outputLabel value="#{auction.model}" style="font-style: normal;margin-bottom: 1.5em"/><br/>
+
+                <p:outputLabel value="#{mess.auctionItem_serialNumber}" style="font-style: oblique;margin-bottom: 1em; font-size: 0.75em"/><br/>
+                <p:outputLabel value="#{auction.serialNumber}" style="font-style: normal;margin-bottom: 1.5em"/><br/>
+
+                <p:outputLabel value="#{mess.auctionItem_parameters}" style="font-style: oblique;margin-bottom: 1em; font-size: 0.75em"/><br/>
+                <p:outputLabel value="#{auction.parameters}" style="font-style: normal;margin-bottom: 1.5em"/><br/>
+
+                <p:outputPanel rendered="#{orderItemStageOneView.isMonitory()}">
+                    <p:outputLabel value="#{mess.auctionItem_additionalInfo}" style="font-style: oblique;margin-bottom: 1em; font-size: 0.75em"/><br/>
+                    <p:outputLabel value="#{auction.additionalInfo}" style="font-style: normal;margin-bottom: 1.5em"/><br/>
+                </p:outputPanel>
+                <p:outputLabel value="#{mess.auctionItem_purchaseDate}" style="font-style: oblique;margin-bottom: 1em; font-size: 0.75em"/><br/>
+                <p:outputLabel value="#{auction.purchaseDate}" style="font-style: normal;margin-bottom: 1.5em; "/><br/>
+
+                <p:outputLabel value="#{mess.auctionItem_price}" style="font-style: oblique;margin-bottom: 1em; font-size: 0.75em"/><br/>
+                <p:outputLabel value="#{auction.priceFormatted}" style="font-style: normal;margin-bottom: 1.5em; "/><br/><br/>
+                <p:outputPanel style="text-align: center;">
+                <p:outputLabel value="#{mess.auctionItem_info2}" style="font-style: oblique;margin-bottom: 1em; font-size: 0.75em"/><br/>
+                </p:outputPanel>
+            </p:outputPanel>
+            <h:form>
+                <p:commandButton action="#{orderItemStageOneView.proceedToStageTwo()}" style="margin-top: 2em; margin-bottom: 0.5em" title="Kup">
+                    <p:ajax event="dialogReturn" listener="#{orderItemStageOneView.onDialogReturn}"/>
+                </p:commandButton>
+            </h:form>
+
+        </p:panel>
+    </h:body>
+</html>
+

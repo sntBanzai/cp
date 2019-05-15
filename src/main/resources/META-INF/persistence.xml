@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="AukcjaSprzetuIT" transaction-type="JTA">
+    <provider>org.hibernate.ejb.HibernatePersistence</provider>
+    <jta-data-source>java:jboss/datasources/BPMPROD</jta-data-source>
+    <class>pl.pgnig.serwis.auction.entity.Admin</class>
+    <class>pl.pgnig.serwis.auction.entity.Users</class>
+    <class>pl.pgnig.serwis.auction.entity.PrivilegesUsers</class>
+    <class>pl.pgnig.serwis.auction.entity.Orders</class>
+    <class>pl.pgnig.serwis.auction.entity.AuctionItem</class>
+    <class>pl.pgnig.serwis.auction.entity.TermsAcknowledgement</class>
+    <class>pl.pgnig.serwis.auction.entity.OrderStatusType</class>
+    <class>pl.pgnig.serwis.auction.entity.AdminType</class>
+    <class>pl.pgnig.serwis.auction.entity.OrderStatus</class>
+    <class>pl.pgnig.serwis.auction.Orders</class>
+    <properties>
+      <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
+      <property name="hibernate.show_sql" value="true"/>
+      <property name="org.hibernate.SQL " value="true"/>
+      <property name="hibernate.transaction.factory_class" value="org.hibernate.transaction.CMTTransactionFactory"/>
+      <property name="hibernate.transaction.flush_before_completion" value="true"/>
+      <property name="hibernate.transaction.auto_close_session" value="true"/>
+      <property name="hibernate.hbm2ddl.auto" value="none"/>
+      <property name="hibernate.connection.useUnicode" value="true"/>
+      <property name="hibernate.connection.characterEncoding" value="utf8"/>
+      <property name="hibernate.connection.CharSet" value="utf8"/>
+    </properties>
+  </persistence-unit>
+</persistence>
